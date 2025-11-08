@@ -1,0 +1,117 @@
+<%- include('partials/header', { pageTitle: 'Pembelian' }) %>
+
+    <h2>Pembelian</h2>
+    <a href="/admin" class="btn-admin">Kembali ke Admin</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Produk</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Nama</th>
+                <th>Status</th>
+                <th>Tgl</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% purchases.forEach(p=> { %>
+                <tr>
+                    <td>
+                        <%= p.id %>
+                    </td>
+                    <td>
+                        <%= p.product_name %>
+                    </td>
+                    <td>
+                        <%= p.quantity %>
+                    </td>
+                    <td>Rp <%= Number(p.total).toLocaleString('id-ID') %>
+                    </td>
+                    <td>
+                        <%= p.customer_name %>
+                    </td>
+                    <td>
+                        <%= p.status %>
+                    </td>
+                    <td>
+                        <%= new Date(p.created_at).toLocaleString() %>
+                    </td>
+                    <td>
+                        <a href="/admin/pembelian/<%= p.id %>">Detail</a>
+                        <% if(p.status !=='cancelled' ) { %>
+                            <form method="post" action="/admin/pembelian/cancel/<%= p.id %>" style="display:inline">
+                                <button type="submit" onclick="return confirm('Cancel pembelian?')">Cancel</button>
+                            </form>
+                            <% } %>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <% if(currentPage> 1) { %>
+            <a href="/admin/pembelian?page=<%= currentPage - 1 %>" class="btn-page">&lt; Previous</a>
+            <% } %>
+                <% if(currentPage < totalPages) { %>
+                    <a href="/admin/pembelian?page=<%= currentPage + 1 %>" class="btn-page">Next &gt;</a>
+                    <% } %>
+    </div>
+
+    <style>
+        .btn-admin {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            color: pink;
+            border: 2px solid pink;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-admin:hover {
+            background-color: pink;
+            color: white;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .pagination {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-page {
+            padding: 8px 15px;
+            border: 2px solid #ff69b4;
+            border-radius: 6px;
+            background-color: white;
+            color: #ff69b4;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .btn-page:hover {
+            background-color: #ff69b4;
+            color: white;
+        }
+    </style>
+
+    <%- include('partials/footer') %>

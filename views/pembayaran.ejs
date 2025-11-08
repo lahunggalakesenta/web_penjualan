@@ -1,0 +1,123 @@
+<%- include('partials/header', { pageTitle: 'Pembayaran' }) %>
+
+    <style>
+        .payment-container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 25px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .payment-container h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .payment-container p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .payment-info {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .payment-info img {
+            max-width: 250px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .rekening-box {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px dashed #999;
+            display: inline-block;
+            margin-top: 10px;
+            color: #333;
+        }
+    </style>
+
+    <div class="payment-container">
+        <h2>Pembayaran Produk: <%= produk.nama %>
+        </h2>
+        <p>Harga: <strong>Rp <%= produk.price.toLocaleString() %></strong></p>
+
+        <form action="/buat-transaksi" method="POST">
+            <input type="hidden" name="produk_id" value="<%= produk.id %>">
+
+            <label for="metode"><strong>Pilih Metode Pembayaran:</strong></label>
+            <select name="metode" id="metode" required>
+                <option value="">-- Pilih Metode --</option>
+                <option value="qris">QRIS</option>
+                <option value="transfer">Transfer Bank</option>
+            </select>
+
+            <div id="qris-info" class="payment-info">
+                <p>Silakan scan QRIS berikut untuk melakukan pembayaran:</p>
+                <img src="/public/images/qris-removebg-preview.png" alt="QRIS Code">
+
+            </div>
+
+            <div id="transfer-info" class="payment-info">
+                <p>Transfer ke rekening berikut:</p>
+                <div class="rekening-box">
+                    <strong>Bank BCA</strong><br>
+                    No. Rekening: <strong>2530182633</strong><br>
+                    Atas Nama: <strong>Irvan Nur Piansyah </strong>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Lanjutkan Pembayaran</button>
+        </form>
+    </div>
+
+    <script>
+        const metodeSelect = document.getElementById('metode');
+        const qrisInfo = document.getElementById('qris-info');
+        const transferInfo = document.getElementById('transfer-info');
+
+        metodeSelect.addEventListener('change', function () {
+            qrisInfo.style.display = 'none';
+            transferInfo.style.display = 'none';
+
+            if (this.value === 'qris') {
+                qrisInfo.style.display = 'block';
+            } else if (this.value === 'transfer') {
+                transferInfo.style.display = 'block';
+            }
+        });
+    </script>
+
+    <%- include('partials/footer') %>

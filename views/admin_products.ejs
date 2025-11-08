@@ -1,0 +1,50 @@
+<%- include('partials/header', { pageTitle: 'Admin - Produk' }) %>
+
+    <div class="admin-header">
+
+        <a class="btn btn-add" href="/admin/produk/new">+ Tambah Produk</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Harga</th>
+                    <th>Stock</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% produk.forEach(p=> { %>
+                    <tr>
+                        <td>
+                            <%= p.id %>
+                        </td>
+                        <td>
+                            <%= p.nama %>
+                        </td>
+                        <td>Rp <%= Number(p.price || 0).toLocaleString('id-ID') %>
+                        </td>
+                        <td>
+                            <%= p.quantity ?? 0 %>
+                        </td>
+                        <td>
+                            <a class="btn btn-view" href="/product/<%= p.id %>">Lihat</a>
+                            <form method="post" action="/admin/produk/delete/<%= p.id %>" style="display:inline"
+                                onsubmit="return confirm('Hapus produk?')">
+                                <button type="submit" class="btn btn-delete">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="admin-footer">
+        <a class="btn btn-pembelian" href="/admin/pembelian">Kelola Pembelian</a>
+    </div>
+
+    <%- include('partials/footer') %>

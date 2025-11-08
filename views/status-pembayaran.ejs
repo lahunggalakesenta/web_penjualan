@@ -1,0 +1,132 @@
+<%- include('partials/header', { pageTitle: 'Status Pembayaran' }) %>
+
+    <style>
+        .payment-status {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 25px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .payment-status h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .payment-status p {
+            color: #555;
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-expired {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        #timer {
+            margin-top: 15px;
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .expired-message {
+            color: #d9534f;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+
+    <div class="payment-status">
+        <h2>Status Pembayaran</h2>
+
+        <p><strong>Produk:</strong>
+            <%= transaksi.nama %>
+        </p>
+        <p><strong>Total:</strong> Rp <%= transaksi.total.toLocaleString() %>
+        </p>
+
+        <% if (transaksi.status==="pending" ) { %>
+            <p>Status:
+                <span class="status-badge status-pending">Menunggu Pembayaran</span>
+            </p>
+            <p id="timer">Memuat waktu...</p>
+
+            <form action="/konfirmasi-pembayaran" method="POST">
+                <input type="hidden" name="transaksi_id" value="<%= transaksi.id %>">
+                <button type="submit">Konfirmasi Pembayaran</button>
+            </form>
+
+            <script>
+                const expiredAt = new Date("<%= transaksi.expired_at.toISOString() %>").getTime();
+                const timer = document.getElementById("timer");
+
+                const interval = setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = expiredAt - now;
+
+                    if (distance <= 0) {
+                        clearInterval(interval);
+                        timer.innerHTML = "<span class='expired-message'>Waktu pembayaran telah habis!</span>";
+                        setTimeout(() => location.reload(), 2000);
+                    } else {
+                        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        const s = Math.floor((distance % (1000 * 60)) / 1000);
+                        timer.innerHTML = `Sisa waktu: ${m} menit ${s} detik`;
+                    }
+                }, 1000);
+            </script>
+
+            <% } else if (transaksi.status==="completed" ) { %>
+                <p>Status:
+                    <span class="status-badge status-completed">Pembayaran Berhasil</span>
+                </p>
+                <p>Terima kasih! Pembayaran Anda telah kami terima.</p>
+
+                <% } else { %>
+                    <p>Status:
+                        <span class="status-badge status-expired">Kadaluarsa / Dibatalkan</span>
+                    </p>
+                    <p class="expired-message">Pembayaran tidak dapat diproses lagi.</p>
+                    <% } %>
+    </div>
+
+    <%- include('partials/footer') %>

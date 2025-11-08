@@ -1,0 +1,30 @@
+const express = require("express");
+const router = express.Router();
+const Groq = require("groq-sdk");
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+router.get("/", (req, res) => {
+    res.render("chatbot"); // file views/chatbot.ejs
+});
+
+router.post("/", async (req, res) => {
+    const { message } = req.body;
+
+    try {
+        const completion = await groq.chat.completions.create({
+            model: "llama-3.1-8b-instant",
+            messages: [
+                { role: "system", content: "Kamu adalah chatbot ramah bernama xionco." },
+                { role: "user", content: message },
+            ],
+        });
+
+        res.json({ reply: completion.choices[0].message.content });
+    } catch (err) {
+        console.error("Error Chatbot:", err);
+        res.json({ reply: "⚠️ Maaf, terjadi kesalahan di server." });
+    }
+});
+
+module.exports = router;

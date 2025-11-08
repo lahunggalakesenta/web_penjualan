@@ -1,0 +1,23 @@
+<%- include('../partials/header', { pageTitle: 'Admin Dashboard' }) %>
+
+    <div class="admin-dashboard">
+        <h1>Selamat Datang, Admin!</h1>
+        <p>Ini adalah halaman dashboard. Dari sini kamu bisa mengelola produk dan pembelian.</p>
+
+        <div class="admin-actions">
+            <a href="/admin/produk" class="btn-admin">
+                <img src="/public/images/produk_icon.png" alt="Produk">
+                Kelola Produk
+            </a>
+            <a href="/admin/pembelian" class="btn-admin">
+                <img src="/public/images/purchase-icon.png" alt="Pembelian">
+                Kelola Pembelian
+            </a>
+            <a href="/" class="btn-admin back-home">
+                <img src="/public/images/home-icon.png" alt="Home">
+                Kembali ke Beranda
+            </a>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>

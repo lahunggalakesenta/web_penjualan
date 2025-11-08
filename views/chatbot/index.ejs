@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Xionco Chatbot</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            background: white;
+            width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .chat-box {
+            height: 350px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .user {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .bot {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .back {
+            margin-top: 10px;
+            display: inline-block;
+            text-decoration: none;
+            color: #2563eb;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chat-container">
+        <h2>💬 Xionco Chatbot</h2>
+        <div id="chat-box" class="chat-box"></div>
+        <form id="chat-form">
+            <input type="text" id="message" placeholder="Ketik pesan..." required>
+            <button type="submit">Kirim</button>
+        </form>
+        <a href="/" class="back">← Kembali ke Dashboard</a>
+    </div>
+
+    <script>
+        const form = document.getElementById("chat-form");
+        const chatBox = document.getElementById("chat-box");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const input = document.getElementById("message");
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            chatBox.innerHTML += `<div class="message user">👤 Kamu: ${msg}</div>`;
+            input.value = "";
+
+            const res = await fetch("/chatbot/api", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: msg }),
+            });
+
+            const data = await res.json();
+            chatBox.innerHTML += `<div class="message bot">🤖 Xionco: ${data.reply || "Terjadi kesalahan..."}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    </script>
+</body>
+
+</html>

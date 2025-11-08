@@ -1,0 +1,496 @@
+:root {
+  --pink: #ff66b2;
+  --card-bg: #ffffff;
+  --text: #000;
+  --bg: #f5f6f7;
+  --table-header: #f0f0f0;
+  --table-border: #ddd;
+}
+
+/* Reset minimal */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Inter, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+/* NAVBAR */
+.navbar {
+  background: #ffffff;
+  border-bottom: 1px solid #eee;
+  padding: 12px 0;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-pill {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: var(--pink);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.nav-pill:hover {
+  opacity: 0.85;
+}
+
+/* Latest header */
+h2.latest {
+  margin: 18px 0 12px 0;
+  font-size: 22px;
+  text-align: left;
+  padding-left: 4px;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
+.card {
+  flex: 1 1 240px;
+  max-width: 100%;
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.product-name {
+  color: #000;
+  margin: 0;
+  font-size: 16px;
+}
+
+.product-price {
+  color: var(--pink);
+  font-weight: 700;
+  margin: 0;
+}
+
+.stock {
+  font-size: 13px;
+  color: #555;
+}
+
+.btn {
+  background: var(--pink);
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* Admin Table */
+.admin-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--table-border);
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.table th {
+  background: var(--table-header);
+  font-weight: 600;
+}
+
+.btn-add {
+  background: var(--pink);
+}
+
+.btn-view {
+  background: #25a9e0;
+}
+
+.btn-delete {
+  background: #f44336;
+}
+
+.btn-pembelian {
+  background: #4caf50;
+  margin-top: 12px;
+}
+
+.admin-footer {
+  margin-top: 16px;
+  text-align: right;
+}
+
+/* admin */
+
+.admin-dashboard {
+    max-width: 900px;
+    margin: 40px auto;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.admin-dashboard h1 {
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.admin-dashboard p {
+    color: #555;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-admin {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--pink);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.btn-admin img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.btn-admin:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.back-home {
+    background-color: #ff8ccf; /* warna pink sedikit berbeda */
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .admin-actions {
+        flex-direction: column;
+    }
+}
+
+/* Forms */
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+/* Chatbot style */
+.chat-container {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+}
+
+.chat-header {
+  background: #075e54;
+  color: white;
+  padding: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.chat-box {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background: #ece5dd;
+}
+
+.message {
+  margin: 10px 0;
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 10px;
+  clear: both;
+}
+
+.user {
+  background: #dcf8c6;
+  float: right;
+}
+
+.bot {
+  background: #fff;
+  float: left;
+}
+
+.chat-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background: #f0f0f0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.chat-input button {
+  margin-left: 10px;
+  padding: 10px 15px;
+  border: none;
+  background: #25d366;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Product Detail Page */
+.product-detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Gambar produk di tengah */
+.product-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-image img {
+    max-width: 420px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Informasi produk */
+.product-info {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.product-info h2 {
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.product-info p {
+    line-height: 1.5;
+}
+
+/* Harga dan stok dengan border */
+.product-price,
+.stock {
+    border: 2px solid var(--pink);
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    font-weight: 600;
+}
+
+/* Tombol Kembali ke Admin */
+.btn-back-admin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--pink);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: all 0.3s;
+}
+
+.btn-back-admin img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.btn-back-admin:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .product-detail {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-info {
+        max-width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* Responsive tablet */
+@media screen and (max-width: 900px) {
+  .cards {
+    justify-content: center;
+  }
+  .card {
+    flex: 1 1 45%;
+  }
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .admin-footer {
+    text-align: center;
+  }
+}
+
+/* Responsive mobile */
+@media screen and (max-width: 600px) {
+  .cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .card {
+    flex: 1 1 100%;
+  }
+  .nav-inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+  h2.latest {
+    text-align: center;
+  }
+  .table th,
+  .table td {
+    padding: 8px;
+    font-size: 14px;
+  }
+  .btn {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+  .chat-container {
+    width: 95%;
+    max-width: none;
+  }
+}

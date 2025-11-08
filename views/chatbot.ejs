@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Xionco Chatbot</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #e5ddd5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 400px;
+            max-height: 600px;
+            background: #fff;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-header {
+            background: #075e54;
+            color: white;
+            padding: 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header .title {
+            flex: 1;
+            text-align: center;
+        }
+
+        .back-btn {
+            background: #25d366;
+            border: none;
+            padding: 5px 10px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #128c7e;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #ece5dd;
+        }
+
+        .message {
+            margin: 10px 0;
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            clear: both;
+        }
+
+        .user {
+            background: #dcf8c6;
+            float: right;
+        }
+
+        .bot {
+            background: #fff;
+            float: left;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            background: #f0f0f0;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        .chat-input button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border: none;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <button class="back-btn" onclick="goBack()">⬅ Kembali</button>
+            <div class="title">💬 Xionco Chatbot</div>
+        </div>
+        <div id="chat-box" class="chat-box"></div>
+        <form id="chat-form" class="chat-input">
+            <input type="text" id="message" placeholder="Ketik pesan..." required>
+            <button type="submit">➤</button>
+        </form>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = "/"; // ganti dengan URL dashboard jika berbeda
+        }
+
+        const form = document.getElementById("chat-form");
+        const chatBox = document.getElementById("chat-box");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const input = document.getElementById("message");
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            // tampilkan pesan user
+            chatBox.innerHTML += `<div class="message user">${msg}</div>`;
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const res = await fetch("/chatbot", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: msg })
+                });
+                const data = await res.json();
+                chatBox.innerHTML += `<div class="message bot">${data.reply || "Terjadi kesalahan..."}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (err) {
+                chatBox.innerHTML += `<div class="message bot">⚠️ Terjadi kesalahan server.</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        });
+    </script>
+</body>
+
+</html>

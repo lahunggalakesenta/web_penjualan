@@ -1,0 +1,150 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: url('/public/images/bunga.jpg') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 50px 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .login-card h2 {
+        color: #ff69b4;
+        margin-bottom: 30px;
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .login-card form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .login-card label {
+        font-weight: bold;
+        color: #333;
+        text-align: left;
+    }
+
+    .login-card input {
+        padding: 18px 20px;
+        border: 2px solid #ffb6c1;
+        border-radius: 10px;
+        font-size: 18px;
+        outline: none;
+        transition: all 0.3s;
+        width: 100%;
+    }
+
+    .login-card input:focus {
+        border-color: #ff1493;
+        box-shadow: 0 0 10px rgba(255, 20, 147, 0.4);
+    }
+
+    .btn {
+        padding: 18px 20px;
+        background-color: #ff69b4;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.3s;
+        width: 100%;
+    }
+
+    .btn:hover {
+        background-color: #ff1493;
+        box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+    }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 20px;
+        background-color: #ffe6f0;
+        padding: 14px;
+        border-radius: 8px;
+        border: 1px solid red;
+        word-wrap: break-word;
+    }
+
+    /* Media Queries untuk tablet */
+    @media (max-width: 768px) {
+        .login-card {
+            padding: 45px 35px;
+        }
+
+        .login-card h2 {
+            font-size: 30px;
+        }
+
+        .login-card input,
+        .btn {
+            font-size: 17px;
+            padding: 15px 18px;
+        }
+    }
+
+    /* Media Queries untuk HP kecil */
+    @media (max-width: 480px) {
+        .login-card {
+            padding: 40px 30px;
+            max-width: 95%;
+            /* hampir full width */
+        }
+
+        .login-card h2 {
+            font-size: 28px;
+        }
+
+        .login-card input,
+        .btn {
+            font-size: 18px;
+            /* lebih besar */
+            padding: 18px 20px;
+            /* lebih tebal */
+        }
+    }
+</style>
+
+<div class="login-card">
+    <h2>Login Admin</h2>
+
+    <% if (error) { %>
+        <div class="error-message">
+            <%= error %>
+        </div>
+        <% } %>
+
+            <form method="post" action="/auth/login">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Masukkan username" required>
+
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Masukkan password" required>
+
+                <button class="btn" type="submit">Login</button>
+            </form>
+</div>

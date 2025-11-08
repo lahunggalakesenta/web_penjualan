@@ -1,0 +1,75 @@
+<%- include('partials/header', { pageTitle: 'Home' }) %>
+
+    <h2 class="latest">Latest Produk</h2>
+
+    <div class="cards">
+        <% produk.forEach(p=> { %>
+            <div class="card">
+                <img src="/public/images/<%= p.image || 'placeholder.png' %>" alt="<%= p.nama %>">
+                <div class="card-body">
+                    <h3 class="product-name">
+                        <%= p.nama %>
+                    </h3>
+                    <p class="product-price">Rp <%= Number(p.price).toLocaleString('id-ID') %>
+                    </p>
+                    <p class="stock">Stock: <%= p.quantity %>
+                    </p>
+
+                    <form action="/pembayaran/<%= p.id %>" method="get">
+                        <button class="btn">Beli</button>
+                    </form>
+
+                </div>
+            </div>
+            <% }) %>
+    </div>
+
+    <style>
+        .latest {
+            text-align: center;
+            color: pink;
+            border: 2px solid pink;
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 220px;
+            text-align: center;
+            padding: 10px;
+            background: #fff;
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .btn {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #ff1493;
+        }
+    </style>
+
+    <%- include('partials/footer') %>

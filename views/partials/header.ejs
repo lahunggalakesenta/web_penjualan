@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>
+        <%= pageTitle || 'Xionco Store' %>
+    </title>
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="nav-inner">
+            <a class="brand" href="/">Xionco</a>
+            <nav class="nav-links">
+                <a class="nav-pill" href="/">Home</a>
+                <a class="nav-pill" href="/chatbot">Chatbot</a>
+                <% if (!user) { %>
+                    <a class="nav-pill" href="/auth/login">Login</a>
+                    <% } else { %>
+                        <a class="nav-pill" href="/admin/produk">Admin</a>
+                        <a class="nav-pill" href="/auth/logout">Logout</a>
+                        <% } %>
+            </nav>
+        </div>
+    </header>
+    <main class="container">

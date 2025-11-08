@@ -1,0 +1,274 @@
+<%- include('partials/header', { pageTitle: 'Detail Pembelian' }) %>
+
+    <div class="resi-container">
+
+        <!-- Tombol Kembali -->
+        <div style="text-align: right; margin-bottom: 10px;">
+            <a href="/admin/pembelian" class="btn-back">← Kembali ke Kelola Pembelian</a>
+        </div>
+
+        <!-- Header Resi -->
+        <div class="resi-header">
+            <h2>Resi Pembelian #<%= purchase.id %>
+            </h2>
+            <img src="/public/images/logo.png" alt="Logo" class="logo">
+        </div>
+
+        <!-- Detail Pembelian -->
+        <div class="resi-body">
+            <p><strong>Produk:</strong>
+                <%= purchase.product_name %>
+            </p>
+            <p><strong>Qty:</strong>
+                <%= purchase.quantity %>
+            </p>
+            <p><strong>Total:</strong> Rp <%= Number(purchase.total).toLocaleString('id-ID') %>
+            </p>
+            <p><strong>Nama Pembeli:</strong>
+                <%= purchase.customer_name %>
+            </p>
+            <p><strong>Status:</strong>
+                <span class="<%= purchase.status === 'cancelled' ? 'cancelled' : 'completed' %>">
+                    <%= purchase.status.toUpperCase() %>
+                </span>
+            </p>
+            <p><strong>Tanggal:</strong>
+                <%= new Date(purchase.created_at).toLocaleString() %>
+            </p>
+        </div>
+
+        <!-- Tombol Cancel -->
+        <% if (purchase.status !=='cancelled' ) { %>
+            <form method="post" action="/admin/pembelian/cancel/<%= purchase.id %>">
+                <button class="btn-cancel" onclick="return confirm('Cancel pembelian ini?')">Cancel Pembelian</button>
+            </form>
+            <% } %>
+
+                <!-- Navigation Previous / Next -->
+                <div class="navigation">
+                    <% if (prevId) { %>
+                        <a href="/admin/pembelian/<%= prevId %>" class="nav-btn">&lt; Previous</a>
+                        <% } %>
+                            <% if (nextId) { %>
+                                <a href="/admin/pembelian/<%= nextId %>" class="nav-btn">Next &gt;</a>
+                                <% } %>
+                </div>
+    </div>
+
+    <!-- Tabel 5 pembelian terakhir -->
+    <div class="table-container">
+        <h3>Pembelian Lainnya</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Produk</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th>Nama</th>
+                    <th>Status</th>
+                    <th>Tanggal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% purchases.forEach(p=> { %>
+                    <tr class="<%= p.id === purchase.id ? 'highlight' : '' %>">
+                        <td><a href="/admin/pembelian/<%= p.id %>">
+                                <%= p.id %>
+                            </a></td>
+                        <td>
+                            <%= p.product_name %>
+                        </td>
+                        <td>
+                            <%= p.quantity %>
+                        </td>
+                        <td>Rp <%= Number(p.total).toLocaleString('id-ID') %>
+                        </td>
+                        <td>
+                            <%= p.customer_name %>
+                        </td>
+                        <td>
+                            <%= p.status %>
+                        </td>
+                        <td>
+                            <%= new Date(p.created_at).toLocaleString() %>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Popup Notifikasi -->
+    <div id="notif-popup">
+        <%= successMessage %>
+    </div>
+
+    <style>
+        /* Container Resi */
+        .resi-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid pink;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Header Resi */
+        .resi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .resi-header .logo {
+            height: 40px;
+        }
+
+        /* Detail Pembelian */
+        .resi-body p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .completed {
+            color: green;
+            font-weight: bold;
+        }
+
+        .cancelled {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Tombol */
+        .btn-cancel {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: 2px solid red;
+            border-radius: 8px;
+            background: white;
+            color: red;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background: red;
+            color: white;
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 8px 15px;
+            border: 2px solid pink;
+            border-radius: 8px;
+            background: white;
+            color: pink;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: pink;
+            color: white;
+        }
+
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .nav-btn {
+            padding: 8px 15px;
+            border: 2px solid #ff69b4;
+            border-radius: 6px;
+            background: white;
+            color: #ff69b4;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background: #ff69b4;
+            color: white;
+        }
+
+        /* Table 5 terakhir */
+        .table-container {
+            max-width: 900px;
+            margin: 30px auto;
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table tr.highlight {
+            background-color: #ffe6f0;
+        }
+
+        /* Notifikasi */
+        #notif-popup {
+            position: fixed;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffb6c1;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            transition: top 0.5s, opacity 0.5s;
+            opacity: 0;
+        }
+
+        #notif-popup.show {
+            top: 20px;
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .resi-container {
+                padding: 15px;
+            }
+
+            .table th,
+            .table td {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+    </style>
+
+    <script>
+        const notif = document.getElementById('notif-popup');
+        if (notif.innerText.trim() !== '') {
+            notif.classList.add('show');
+            setTimeout(() => { notif.classList.remove('show'); }, 3000);
+        }
+    </script>
+
+    <%- include('partials/footer') %>

@@ -1,0 +1,18 @@
+<%- include('partials/header', { pageTitle: produk ? 'Edit Produk' : 'Tambah Produk' }) %>
+
+    <h2>
+        <%= produk ? 'Edit Produk' : 'Tambah Produk' %>
+    </h2>
+    <form action="<%= produk ? '/admin/produk/update/' + produk.id : '/admin/produk/create' %>" method="post"
+        enctype="multipart/form-data">
+        <label>Nama</label><input type="text" name="nama" value="<%= produk?.nama || '' %>" required>
+        <label>Deskripsi</label><textarea name="description"><%= produk?.description || '' %></textarea>
+        <label>Harga</label><input type="number" step="0.01" name="price" value="<%= produk?.price || '' %>">
+        <label>Stock</label><input type="number" name="quantity" value="<%= produk?.quantity ?? 0 %>">
+        <label>Upload Gambar (opsional)</label><input type="file" name="image">
+        <label> atau Nama file gambar (mis: kursi.jpg)</label><input type="text" name="image_name"
+            value="<%= produk?.image || '' %>">
+        <button class="btn" type="submit">Simpan</button>
+    </form>
+
+    <%- include('partials/footer') %>
